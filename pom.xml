@@ -4,7 +4,7 @@
 
     <groupId>com.facebook.presto.hadoop</groupId>
     <artifactId>hadoop-cdh4</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
 
     <name>hadoop-cdh4</name>
     <description>Shaded version of CDH4 Hadoop for Presto</description>
@@ -23,7 +23,7 @@
     <scm>
         <connection>scm:git:git://github.com/facebook/presto-hadoop-cdh4.git</connection>
         <url>https://github.com/facebook/presto-hadoop-cdh4</url>
-        <tag>HEAD</tag>
+        <tag>0.1</tag>
     </scm>
 
     <distributionManagement>
@@ -262,7 +262,7 @@
                             <createSourcesJar>true</createSourcesJar>
                             <keepDependenciesWithProvidedScope>false</keepDependenciesWithProvidedScope>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                             </transformers>
                             <relocations>
                                 <relocation>
