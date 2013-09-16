@@ -3,7 +3,7 @@ package com.facebook.presto.hadoop;
 import org.apache.hadoop.util.NativeCodeLoader;
 import org.testng.annotations.Test;
 
-import static junit.framework.Assert.assertTrue;
+import static org.testng.Assert.assertTrue;
 
 public class TestHadoopNative
 {
