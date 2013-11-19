@@ -14,6 +14,7 @@
 package com.facebook.presto.hadoop;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.util.NativeCodeLoader;
 
@@ -24,6 +25,8 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+
+import static org.apache.hadoop.io.compress.CompressionCodecFactory.getCodecClasses;
 
 public final class HadoopNative
 {
@@ -42,16 +45,30 @@ public final class HadoopNative
         }
         try {
             loadLibrary("hadoop");
+            loadLibrary("snappy");
             setStatic(NativeCodeLoader.class.getDeclaredField("nativeCodeLoaded"), true);
 
             // verify that all configured codec classes can be loaded
-            CompressionCodecFactory.getCodecClasses(new Configuration());
+            loadAllCodecs();
 
             loaded = true;
         }
         catch (Throwable t) {
             error = t;
             throw new RuntimeException("failed to load Hadoop native library", error);
+        }
+    }
+
+    private static void loadAllCodecs()
+    {
+        Configuration conf = new Configuration();
+        CompressionCodecFactory factory = new CompressionCodecFactory(conf);
+        for (Class<? extends CompressionCodec> clazz : getCodecClasses(conf)) {
+            CompressionCodec codec = factory.getCodecByClassName(clazz.getName());
+            if (codec == null) {
+                throw new RuntimeException("failed to load codec: " + clazz.getName());
+            }
+            codec.getDecompressorType();
         }
     }
 
