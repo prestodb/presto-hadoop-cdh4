@@ -75,10 +75,6 @@
                     <artifactId>commons-beanutils-core</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>commons-codec</groupId>
-                    <artifactId>commons-codec</artifactId>
-                </exclusion>
-                <exclusion>
                     <groupId>commons-collections</groupId>
                     <artifactId>commons-collections</artifactId>
                 </exclusion>
@@ -89,10 +85,6 @@
                 <exclusion>
                     <groupId>commons-el</groupId>
                     <artifactId>commons-el</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-httpclient</groupId>
-                    <artifactId>commons-httpclient</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>commons-logging</groupId>
@@ -151,10 +143,6 @@
                     <artifactId>jsp-api</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>net.java.dev.jets3t</groupId>
-                    <artifactId>jets3t</artifactId>
-                </exclusion>
-                <exclusion>
                     <groupId>javax.servlet</groupId>
                     <artifactId>servlet-api</artifactId>
                 </exclusion>
@@ -197,6 +185,7 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-hdfs</artifactId>
             <version>${dep.hadoop.version}</version>
+            <scope>runtime</scope>
             <exclusions>
                 <exclusion>
                     <groupId>commons-codec</groupId>
@@ -265,6 +254,7 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-mapreduce-client-core</artifactId>
             <version>${dep.hadoop.version}</version>
+            <scope>runtime</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.hadoop</groupId>
@@ -318,24 +308,28 @@
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>${dep.slf4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
             <version>${dep.slf4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${dep.slf4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
             <version>${dep.slf4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- for testing -->
@@ -471,6 +465,10 @@
                                     <shadedPattern>${shadeBase}.com.google.protobuf</shadedPattern>
                                 </relocation>
                                 <relocation>
+                                    <pattern>org.jets3t</pattern>
+                                    <shadedPattern>${shadeBase}.org.jets3t</shadedPattern>
+                                </relocation>
+                                <relocation>
                                     <pattern>org.apache.log4j</pattern>
                                     <shadedPattern>${shadeBase}.org.apache.log4j</shadedPattern>
                                 </relocation>
@@ -497,6 +495,12 @@
                                     <excludes>
                                         <exclude>*.xml</exclude>
                                         <exclude>*.dtd</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>commons-httpclient:commons-httpclient</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/README.txt</exclude>
                                     </excludes>
                                 </filter>
                                 <filter>
