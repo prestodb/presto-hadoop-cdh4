@@ -16,6 +16,8 @@ package com.facebook.presto.hadoop;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.io.compress.CompressionCodecFactory;
+import org.apache.hadoop.security.Groups;
+import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.util.ExitUtil;
 import org.apache.hadoop.util.NativeCodeLoader;
 import org.apache.hadoop.util.NativeLibraryChecker;
@@ -62,6 +64,19 @@ public class TestHadoopNative
             byte[] actual = decompress(codec, compress(codec, expected));
             assertEquals(actual, expected);
         }
+    }
+
+    @Test
+    public void testUserGroupInformation()
+            throws Exception
+    {
+        HadoopNative.requireHadoopNative();
+        assertTrue(NativeCodeLoader.isNativeCodeLoaded());
+
+        String username = UserGroupInformation.getLoginUser().getShortUserName();
+        UserGroupInformation.isSecurityEnabled();
+        Groups.getUserToGroupsMappingService();
+        new Groups(new Configuration()).getGroups(username);
     }
 
     private static byte[] compress(CompressionCodec codec, byte[] input)
