@@ -41,7 +41,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.targetJdk>1.7</project.build.targetJdk>
         <shadeBase>com.facebook.presto.hadoop.shaded</shadeBase>
-        <dep.hadoop.version>2.0.0-cdh4.7.1</dep.hadoop.version>
+        <dep.hadoop.version>3.2.3</dep.hadoop.version>
         <dep.slf4j.version>1.6.6</dep.slf4j.version>
     </properties>
 
